@@ -1,0 +1,193 @@
+[{
+  "_id": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "email": "karla@hotmail.com",
+  "hashPassword": "$2b$10$m4n4c9NMQLS6sGlqSnoFe.3BmZRODYW6U7sP2jdAM/e3UAsdB0s0a",
+  "role": "admin",
+  "avatar": "https://ejemplo.com/avatar.jpg",
+  "phone": "1234567890",
+  "isActive": true,
+  "__v": 0,
+  "displayName": "karla"
+},
+{
+  "_id": {
+    "$oid": "689ec6b7bfa2dd11efdbd2ec"
+  },
+  "email": "juan.perez@example.com",
+  "hashPassword": "$2b$10$4s26QnPP4BJpWs6f9KnX9u61o4x2xLQYTEd7prwCpGTe7D3kdlaCq",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1234567990",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689ec73abfa2dd11efdbd2ef"
+  },
+  "email": "rodrigo.tavarez@example.com",
+  "hashPassword": "$2b$10$twqk/pFSmOssSpIjHUBXl.9W4JKoychOc58ivQEnRAoJ/SJr5QCqu",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1234567790",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689ec824bfa2dd11efdbd2f2"
+  },
+  "email": "carlos.rivera@example.com",
+  "hashPassword": "$2b$10$xVTWhPdNFGNVwlw3JpCbKO2iRf5aD9o1F7Zzw9CCXs1ofZ9jPCyau",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1244567790",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689ecb1dbfa2dd11efdbd2f6"
+  },
+  "email": "ana.rodriguez@example.com",
+  "hashPassword": "$2b$10$FyQKrBK4EQdWocz4Pr0Yp.XdKAyW52d2pREeDYvnzNoJ62T7DqY46",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1244567700",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689fcc48ebb4895ab68b59c3"
+  },
+  "email": "georgina.dominguzguez@example.com",
+  "hashPassword": "$2b$10$PMoajxfzvEMrOzUVeEbYnOcTc.979hQ60wcUVeJdB/7lkKduQ2.Ey",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1244567778",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689fcd6febb4895ab68b59c6"
+  },
+  "email": "cristiano.ronaldo@example.com",
+  "hashPassword": "$2b$10$WTGazV./0mIzmJX.waS/PeWG3mOtG6dxYa75VApcEQrLBPoQ1OlOS",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1234567708",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689fcdccebb4895ab68b59c9"
+  },
+  "email": "adrian.campos@example.com",
+  "hashPassword": "$2b$10$gUxhdsa9KFH350tEqewDWeqBY/sC7V76ErcYpnPVkKkt42tTh08qK",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1234567704",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689fce32ebb4895ab68b59cc"
+  },
+  "email": "juan.luna@example.com",
+  "hashPassword": "$2b$10$oZOAu9twqJawIUApwcktwe0S1qKbIvemqQrSwExtJqsrIhxFS2ZYC",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1234567799",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689fcea6ebb4895ab68b59cf"
+  },
+  "email": "natalia.lafourcade@example.com",
+  "hashPassword": "$2b$10$evVJqZSXl7NeJGxOIdwzu.vJpgpdotEbBP5ZoWTAfBKpiqkZaBljS",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1234567777",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a12dca6e9d2d6bce725245"
+  },
+  "email": "belinda@ejemplo.com",
+  "hashPassword": "$2b$10$memm6YCLT1t8zdesKJRdgeVdWGhktM4hTSN2mM/T.5JVKvFPY/nfu",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1234567890",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a15e4f33953d7397aaa0f8"
+  },
+  "email": "jerry@email.com",
+  "hashPassword": "$2b$10$vbu2OFZpsGhcxkjvnCivMuYdR0keflfOhmq7xdYmKd0H/zCY4nava",
+  "role": "customer",
+  "avatar": "https://url.com/avatar.png",
+  "phone": "1234567890",
+  "isActive": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a4f175d007db44f14c9e64"
+  },
+  "email": "francisco.herrera@example.com",
+  "hashPassword": "$2b$10$FE3aG5kmUEwxFDywWVaoteXlEQVbFaSGZt8OsLsrsBRgI7coVz1Dm",
+  "role": "guest",
+  "avatar": "https://example.com/avatar.jpg",
+  "phone": "1244567700",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "696d9470081e7b2808d1ac60"
+  },
+  "displayName": "Rodrigo",
+  "email": "rodrigo@inadaptados.mx",
+  "hashPassword": "$2b$10$m4n4c9NMQLS6sGlqSnoFe.3BmZRODYW6U7sP2jdAM/e3UAsdB0s0a",
+  "role": "guest",
+  "avatar": "https://placehold.co/100x100.png",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69994030c25f47638ee02117"
+  },
+  "displayName": "Juan Perez",
+  "email": "juan@example.com",
+  "hashPassword": "$2b$10$P5mHXIlubsDkVy1QXQOSVOC0sO1Op/RLd5bIC.k7QEs4RD8lOLFJi",
+  "role": "guest",
+  "avatar": "https://placehold.co/100x100.png",
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "699fb33cb56f10b588821795"
+  },
+  "displayName": "Admin",
+  "email": "admin@ecommerce.test",
+  "hashPassword": "$2b$10$Vx6N9dH.DuMb8.6i9X/GQenUsvs99k0m/QMcuf1f7WHpwWCCwmsKu",
+  "role": "admin",
+  "avatar": "https://placehold.co/100x100.png",
+  "isActive": true,
+  "__v": 0
+}]

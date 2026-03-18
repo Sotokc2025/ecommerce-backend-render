@@ -1,0 +1,59 @@
+[{
+  "_id": {
+    "$oid": "6893f2f0f72ccb289e5f7ce6"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "type": "credit_card",
+  "cardNumber": "1234567890123456",
+  "cardHolderName": "Juan Pérez",
+  "expiryDate": "12/25",
+  "isDefault": false,
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6893f38af72ccb289e5f7cea"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "type": "credit_card",
+  "cardNumber": "1234567890123456",
+  "cardHolderName": "Ana Rivera",
+  "expiryDate": "12/27",
+  "isDefault": false,
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6893f3b0f72ccb289e5f7cee"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "type": "credit_card",
+  "cardNumber": "1234567890123456",
+  "cardHolderName": "Ana Rivera",
+  "expiryDate": "12/27",
+  "isDefault": false,
+  "isActive": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6893f76c47e7cfc52153e207"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "type": "bank_transfer",
+  "bankName": "Banco Santander",
+  "accountNumber": "1234567890123456",
+  "isDefault": false,
+  "isActive": true,
+  "__v": 0
+}]

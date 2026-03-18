@@ -1,0 +1,234 @@
+[{
+  "_id": {
+    "$oid": "68a0094457c397d7cb316483"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "cristiano ronaldo",
+  "address": "Av. Libertador 1234, Piso 5, Depto B",
+  "city": "Lisboa",
+  "state": "Lisboa",
+  "postalCode": "1425",
+  "country": "Portugal",
+  "phone": "54 11 45678901",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a00acd57c397d7cb316486"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "georgina dominguez",
+  "address": "Av. Polanco 1234, Depto B",
+  "city": "México",
+  "state": "Df",
+  "postalCode": "1234",
+  "country": "México",
+  "phone": "55 11 45678901",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a13530f6005fcee3c4619c"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "Belinda Soto",
+  "address": "Av. Vallarta 1234, Piso 5, Depto B",
+  "city": "Buenos Aires",
+  "state": "CABA",
+  "postalCode": "1425",
+  "country": "Argentina",
+  "phone": "1123456789",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a139cbf6005fcee3c461a9"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "karla",
+  "address": "Av. Vallarta 1000, Piso 7, Depto B",
+  "city": "Jalisco",
+  "state": "Jalisco",
+  "postalCode": "1000",
+  "country": "Mexico",
+  "phone": "54 11 45677701",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a13a31f6005fcee3c461ac"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "juan perez",
+  "address": "Av. Jalisco 1000, Piso 7, Depto B",
+  "city": "Guadalajara",
+  "state": "Jalisco",
+  "postalCode": "1000",
+  "country": "Mexico",
+  "phone": "54 11 45677770",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a13b4af6005fcee3c461af"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "rodrigo tavarez",
+  "address": "Av. Libertador 1000, Piso 1, Depto B",
+  "city": "Lisboa",
+  "state": "Lisboa",
+  "postalCode": "1423",
+  "country": "Portugal",
+  "phone": "54 11 45673000",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a13bbef6005fcee3c461b2"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "ana rodriguez",
+  "address": "Av. Libertador 1001, Piso 1, Depto B",
+  "city": "Lisboa",
+  "state": "Lisboa",
+  "postalCode": "1423",
+  "country": "Portugal",
+  "phone": "54 11 45613000",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a13c64f6005fcee3c461b5"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "adrian campos",
+  "address": "Av. Aguascalientes 1001, Piso 1, Depto B",
+  "city": "Aguascalientes",
+  "state": "Aguascalientes",
+  "postalCode": "1423",
+  "country": "Mexico",
+  "phone": "54 11 45611000",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a13d02f6005fcee3c461b8"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "juan luna",
+  "address": "Av. Aguascalientes 1000, Piso 1, Depto B",
+  "city": "Aguascalientes",
+  "state": "Aguascalientes",
+  "postalCode": "1423",
+  "country": "Mexico",
+  "phone": "54 11 4570000",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a1419b5137e366c852a2d7"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "natalia lafourcade",
+  "address": "Av. Aguascalientes 1007, Piso 7, Depto B",
+  "city": "Aguascalientes",
+  "state": "Aguascalientes",
+  "postalCode": "1423",
+  "country": "Mexico",
+  "phone": "54 11 4577777",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a141fe5137e366c852a2da"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "carlos rivera",
+  "address": "Av. Aguascalientes 1011, Piso 7, Depto B",
+  "city": "Aguascalientes",
+  "state": "Aguascalientes",
+  "postalCode": "1423",
+  "country": "Mexico",
+  "phone": "54 11 4577770",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a4fb6a6bab7617126d687a"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "Francisco Herrera",
+  "address": "Av. Carranza",
+  "city": "Aguascalientes",
+  "state": "Aguascalientes",
+  "postalCode": "20000",
+  "country": "México",
+  "phone": "1244567700",
+  "isDefault": false,
+  "addressType": "home",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a4fc9d6bab7617126d687d"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "name": "Rosa Velasco",
+  "address": "Av. Colosio",
+  "city": "Aguascalientes",
+  "state": "Aguascalientes",
+  "postalCode": "20200",
+  "country": "México",
+  "phone": "1774567700",
+  "isDefault": true,
+  "addressType": "home",
+  "__v": 0
+}]

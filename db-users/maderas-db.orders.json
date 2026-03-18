@@ -1,0 +1,439 @@
+[{
+  "_id": {
+    "$oid": "68a027d172350250ce9f3212"
+  },
+  "user": {
+    "$oid": "689fcd6febb4895ab68b59c6"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689fec25ea2b45bf914f01e0"
+      },
+      "quantity": 7,
+      "price": 800,
+      "_id": {
+        "$oid": "68a027d172350250ce9f3213"
+      }
+    },
+    {
+      "productId": {
+        "$oid": "689fea8fea2b45bf914f01dc"
+      },
+      "quantity": 4,
+      "price": 800,
+      "_id": {
+        "$oid": "68a027d172350250ce9f3214"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Libertador 1234, Piso 5, Depto B",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 8850,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-16T06:40:17.442Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-16T06:40:17.442Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a136f5f6005fcee3c4619e"
+  },
+  "user": {
+    "$oid": "68a12dca6e9d2d6bce725245"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689fea8fea2b45bf914f01dc"
+      },
+      "quantity": 1,
+      "price": 800,
+      "_id": {
+        "$oid": "68a136f5f6005fcee3c4619f"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Vallarta 1234, Piso 5, Depto B",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 850,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T01:57:09.027Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T01:57:09.027Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a1388cf6005fcee3c461a3"
+  },
+  "user": {
+    "$oid": "689fcc48ebb4895ab68b59c3"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689fea8fea2b45bf914f01dc"
+      },
+      "quantity": 1,
+      "price": 800,
+      "_id": {
+        "$oid": "68a1388cf6005fcee3c461a4"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Polanco 1234, Depto B",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 850,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T02:03:56.172Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T02:03:56.172Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a1459833953d7397aaa0c2"
+  },
+  "user": {
+    "$oid": "689ec6b7bfa2dd11efdbd2ec"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689fea8fea2b45bf914f01dc"
+      },
+      "quantity": 2,
+      "price": 800,
+      "_id": {
+        "$oid": "68a1459833953d7397aaa0c3"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Jalisco 1000, Piso 7, Depto B",
+  "paymentMethod": "debit_card",
+  "shippingCost": 50,
+  "totalPrice": 1650,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T02:59:36.797Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T02:59:36.797Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a1482233953d7397aaa0cc"
+  },
+  "user": {
+    "$oid": "689ec73abfa2dd11efdbd2ef"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689fea8fea2b45bf914f01dc"
+      },
+      "quantity": 1,
+      "price": 800,
+      "_id": {
+        "$oid": "68a1482233953d7397aaa0cd"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Libertador 1000, Piso 1, Depto B",
+  "paymentMethod": "debit_card",
+  "shippingCost": 50,
+  "totalPrice": 850,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T03:10:26.876Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T03:10:26.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a14c1233953d7397aaa0d1"
+  },
+  "user": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689fea8fea2b45bf914f01dc"
+      },
+      "quantity": 1,
+      "price": 800,
+      "_id": {
+        "$oid": "68a14c1233953d7397aaa0d2"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Vallarta 1000, Piso 7, Depto B",
+  "paymentMethod": "debit_card",
+  "shippingCost": 50,
+  "totalPrice": 850,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T03:27:14.070Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T03:27:14.070Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a14e8333953d7397aaa0db"
+  },
+  "user": {
+    "$oid": "689ec824bfa2dd11efdbd2f2"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689feccaea2b45bf914f01e2"
+      },
+      "quantity": 1,
+      "price": 1100,
+      "_id": {
+        "$oid": "68a14e8333953d7397aaa0dc"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Aguascalientes 1011, Piso 7, Depto B",
+  "paymentMethod": "credit_card",
+  "shippingCost": 20,
+  "totalPrice": 1120,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T03:37:39.670Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T03:37:39.670Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a14f2a33953d7397aaa0e0"
+  },
+  "user": {
+    "$oid": "689ecb1dbfa2dd11efdbd2f6"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689feccaea2b45bf914f01e2"
+      },
+      "quantity": 1,
+      "price": 1100,
+      "_id": {
+        "$oid": "68a14f2a33953d7397aaa0e1"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Libertador 1001, Piso 1, Depto B",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 1150,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T03:40:26.464Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T03:40:26.464Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a1502633953d7397aaa0e5"
+  },
+  "user": {
+    "$oid": "689fcdccebb4895ab68b59c9"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689feccaea2b45bf914f01e2"
+      },
+      "quantity": 2,
+      "price": 1100,
+      "_id": {
+        "$oid": "68a1502633953d7397aaa0e6"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Aguascalientes 1001, Piso 1, Depto B",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 2250,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T03:44:38.596Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T03:44:38.596Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a152b133953d7397aaa0ea"
+  },
+  "user": {
+    "$oid": "689fce32ebb4895ab68b59cc"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689feccaea2b45bf914f01e2"
+      },
+      "quantity": 1,
+      "price": 1100,
+      "_id": {
+        "$oid": "68a152b133953d7397aaa0eb"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Aguascalientes 1000, Piso 1, Depto B",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 1150,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T03:55:29.649Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-17T03:55:29.649Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a154a633953d7397aaa0ef"
+  },
+  "user": {
+    "$oid": "689fcea6ebb4895ab68b59cf"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "689feccaea2b45bf914f01e2"
+      },
+      "quantity": 1,
+      "price": 1100,
+      "_id": {
+        "$oid": "68a154a633953d7397aaa0f0"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Aguascalientes 1007, Piso 7, Depto B",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 1150,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-17T04:03:50.204Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-20T16:55:27.728Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a505e2d9595f9608f480ea"
+  },
+  "user": {
+    "$oid": "68a4f175d007db44f14c9e64"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "68a4f73015bbe7361efc7880"
+      },
+      "quantity": 1,
+      "price": 1000,
+      "_id": {
+        "$oid": "68a505e2d9595f9608f480eb"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Carranza",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 1050,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-19T23:16:50.104Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-19T23:16:50.104Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a506ddd9595f9608f480ef"
+  },
+  "user": {
+    "$oid": "68a15e4f33953d7397aaa0f8"
+  },
+  "products": [
+    {
+      "productId": {
+        "$oid": "68a4f5ec15bbe7361efc787e"
+      },
+      "quantity": 1,
+      "price": 800,
+      "_id": {
+        "$oid": "68a506ddd9595f9608f480f0"
+      }
+    }
+  ],
+  "shippingAddress": "Av. Colosio",
+  "paymentMethod": "credit_card",
+  "shippingCost": 50,
+  "totalPrice": 850,
+  "status": "pending",
+  "paymentStatus": "pending",
+  "createdAt": {
+    "$date": "2025-08-19T23:21:01.448Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-19T23:21:01.448Z"
+  },
+  "__v": 0
+}]

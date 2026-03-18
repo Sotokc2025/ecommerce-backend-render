@@ -1,0 +1,66 @@
+[{
+  "_id": {
+    "$oid": "68a614c515eb9705a99ce1d8"
+  },
+  "email": "francisco.herrera@example.com",
+  "enterpriseName": "Empresa S.A.",
+  "country": "México",
+  "city": "Ciudad de México",
+  "address": "Calle 123, Colonia Centro",
+  "isActive": true,
+  "pedimento": "ABC-123",
+  "userId": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "createdAt": {
+    "$date": "2025-08-20T18:32:37.308Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-20T18:32:37.308Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a615a815eb9705a99ce1db"
+  },
+  "email": "jerry@email.com",
+  "enterpriseName": "TYP, SA.",
+  "country": "México",
+  "city": "Ciudad de México",
+  "address": "Calle Rosas, Colonia Bellavista",
+  "isActive": true,
+  "pedimento": "ABC-113",
+  "userId": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "createdAt": {
+    "$date": "2025-08-20T18:36:24.649Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-20T18:40:53.544Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68a8f27b6ca07c8fbe8cc85f"
+  },
+  "email": "jesus@hotmail.com",
+  "enterpriseName": "Empresa S.A.",
+  "country": "México",
+  "city": "Ciudad de México",
+  "address": "Calle 123, Colonia Centro",
+  "isActive": false,
+  "pedimento": "ABC-111",
+  "userId": {
+    "$oid": "689127fdf83ea05283a2d890"
+  },
+  "createdAt": {
+    "$date": "2025-08-22T22:43:07.770Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-22T22:44:55.621Z"
+  },
+  "__v": 0
+}]
