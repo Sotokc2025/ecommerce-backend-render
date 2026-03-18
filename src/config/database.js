@@ -7,6 +7,12 @@ const dbConnection = async () => {
   try {
     const dbURI = process.env.MONGODB_URI;
 
+    if (!dbURI) {
+      throw new Error(
+        "CRITICAL: MONGODB_URI is not defined. Please check your environment variables (Render Dashboard -> Environment)."
+      );
+    }
+
     await mongoose.connect(dbURI, {
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
