@@ -11,6 +11,7 @@ import reviewRoutes from "./reviewRoutes.js";
 import shippingAddressRoutes from "./shippingAddressRoutes.js";
 import userRoutes from "./userRoutes.js";
 import wishListRoutes from "./wishListRoutes.js";
+import tymcoRoutes from "./tymcoRoutes.js";
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.use(reviewRoutes);
 router.use(shippingAddressRoutes);
 router.use(userRoutes);
 router.use(wishListRoutes);
+router.use("/tymco", tymcoRoutes);
 
 export default router;

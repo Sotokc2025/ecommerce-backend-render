@@ -110,7 +110,7 @@ async function seed() {
         "Compuesto de capas de madera tipo pino y resinas urea-formaldehído y melamina prensada a altas temperaturas",
       price: 700,
       stock: 100,
-      imagesUrl: ["/assets/products/pine_wood.png"],
+      imagesUrl: ["/assets/products/particle_board.png"],
       category: categoryDocs["Aglomerado"]._id,
     },
     {
@@ -119,7 +119,7 @@ async function seed() {
         "Compuesto de capas de madera con material melamínico resinas urea-formaldehído prensado a altas temperaturas.",
       price: 1000,
       stock: 400,
-      imagesUrl: ["/assets/products/pine_wood.png"],
+      imagesUrl: ["/assets/products/melamine.png"],
       category: categoryDocs["Aglomerado melaminado"]._id,
     },
     {
@@ -163,7 +163,7 @@ async function seed() {
       description: "fabricado de madera amarilla, textura de media a bastante gruesa y resina",
       price: 800,
       stock: 100,
-      imagesUrl: ["/assets/products/pine_wood.png"],
+      imagesUrl: ["/assets/products/primavera.png"],
       category: categoryDocs["madera primavera"]._id,
     },
   ];

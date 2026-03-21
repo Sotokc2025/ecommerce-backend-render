@@ -82,7 +82,10 @@ const getDefaultAddress = async (req, res, next) => {
     const defaultAddress = await ShippingAddress.findOne({ user: userId, isDefault: true });
 
     if (!defaultAddress) {
-      return res.status(404).json({ message: "No default address found" });
+      return res.status(200).json({
+        message: "No default address found",
+        address: null,
+      });
     }
 
     res.status(200).json({
