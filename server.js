@@ -40,6 +40,14 @@ app.use(helmet());
 app.use(express.json());
 app.use(logger);
 
+// Configurar Pug
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "src/views"));
+
 // Rate limiting global para toda la API
 app.use("/api", apiLimiter);
 
@@ -59,15 +67,23 @@ app.get("/health", async (req, res) => {
   }
 });
 
-// Ruta raíz
+// Ruta raíz - IT'S ALIVE!!
 app.get("/", (req, res) => {
-  res.json({
-    message: "E-commerce API",
-    version: "1.0.0",
-    endpoints: {
-      health: "/health",
-      api: "/api",
-    },
+  res.render("alive");
+});
+
+// Health Status Dashboard
+app.get("/status", (req, res) => {
+  const db_status = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
+  const db_name = mongoose.connection.name || 'maderas-db';
+  const db_user = process.env.MONGODB_USER || 'karlitasoto2026_db_user';
+  const uptime = Math.floor(process.uptime());
+
+  res.render("status", {
+    db_status,
+    db_name,
+    db_user,
+    uptime
   });
 });
 

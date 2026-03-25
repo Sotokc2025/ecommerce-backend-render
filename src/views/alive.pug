@@ -1,0 +1,111 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title TyMCO Legacy BackEnd Server
+    style.
+      @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@300;400;700&display=swap');
+      
+      :root {
+        --bg-color: #0d1117;
+        --text-color: #c9d1d9;
+        --accent-glow: #3fb950;
+        --lightning: #58a6ff;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow: hidden;
+        text-align: center;
+        position: relative;
+      }
+
+      /* Lightning Effect */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-color: var(--lightning);
+        opacity: 0;
+        z-index: -1;
+        animation: lightning 5s infinite;
+        pointer-events: none;
+      }
+
+      @keyframes lightning {
+        0% { opacity: 0; }
+        2% { opacity: 0.8; }
+        4% { opacity: 0; }
+        6% { opacity: 0.3; }
+        8% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+
+      h1 {
+        font-family: 'Creepster', cursive;
+        font-size: 6rem;
+        color: var(--accent-glow);
+        text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
+        margin: 0;
+        animation: heartbeat 1.5s infinite alternate;
+        letter-spacing: 5px;
+      }
+
+      @keyframes heartbeat {
+        0% { transform: scale(1); text-shadow: 0 0 10px var(--accent-glow); }
+        100% { transform: scale(1.1); text-shadow: 0 0 20px var(--accent-glow), 0 0 50px var(--accent-glow); }
+      }
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 300;
+        margin-top: 10px;
+        color: #8b949e;
+        letter-spacing: 2px;
+      }
+
+      .container {
+        padding: 2rem;
+        border: 2px solid #30363d;
+        border-radius: 15px;
+        background: rgba(22, 27, 34, 0.8);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        backdrop-filter: blur(4px);
+        max-width: 600px;
+        z-index: 10;
+        position: relative;
+      }
+
+      .info {
+        margin-top: 2rem;
+        font-size: 1.2rem;
+        background: #21262d;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 5px solid var(--accent-glow);
+      }
+      
+      .version {
+        font-family: monospace;
+        color: var(--lightning);
+        font-size: 1.1rem;
+      }
+
+  body
+    div.container
+      h1 IT'S ALIVE!
+      h2 IT'S ALIVE!!
+      p.info BackEnd del Ecommerce Legacy "MERN" de TyMCO; que está operando correctamente y esperando tus solicitudes
+      p
+        | Versión actual de la API: 
+        span.version v1.0.1

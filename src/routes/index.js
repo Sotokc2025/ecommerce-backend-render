@@ -1,5 +1,4 @@
 import express from "express";
-
 import authRoutes from "./authRoutes.js";
 import cartRoutes from "./cartRoutes.js";
 import categoryRoutes from "./categoryRoutes.js";
@@ -14,6 +13,11 @@ import wishListRoutes from "./wishListRoutes.js";
 import tymcoRoutes from "./tymcoRoutes.js";
 
 const router = express.Router();
+
+// Ruta It's ALIVE
+router.get("/", (req, res) => {
+    res.render("alive");
+});
 
 router.use("/auth", authRoutes);
 router.use(cartRoutes);
