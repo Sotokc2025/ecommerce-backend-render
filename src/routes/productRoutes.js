@@ -12,6 +12,7 @@ import {
 import authMiddleware from "../middlewares/authMiddleware.js";
 import isAdmin from "../middlewares/isAdminMiddleware.js";
 import validate from "../middlewares/validation.js";
+import upload from "../middlewares/upload.js";
 import {
     bodyMongoIdValidation,
     imagesUrlValidation,
@@ -159,12 +160,13 @@ router.post(
   "/products",
   authMiddleware,
   isAdmin,
+  upload.array("images", 5),
   [
     productNameValidation(true),
     productDescriptionValidation(true),
     priceValidation("price"),
     stockValidation(),
-    ...imagesUrlValidation(true),
+    ...imagesUrlValidation(false), // Opcional porque ahora viene de multer en req.files
     bodyMongoIdValidation("category", "Category"),
   ],
   validate,
@@ -175,6 +177,7 @@ router.put(
   "/products/:id",
   authMiddleware,
   isAdmin,
+  upload.array("images", 5),
   [
     mongoIdValidation("id", "Product ID"),
     productNameValidation(false),

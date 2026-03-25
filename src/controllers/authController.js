@@ -90,7 +90,15 @@ async function login(req, res, next) {
       userExist.displayName,
       userExist.role,
     );
-    res.status(200).json({ token, refreshToken });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    });
+
+    res.status(200).json({ token });
   } catch (error) {
     next(error);
   }
@@ -111,7 +119,7 @@ async function checkEmail(req, res, next) {
 
 async function refreshToken(req, res, next) {
   try {
-    const token = req.body.refreshToken;
+    const token = req.cookies?.refreshToken;
     if (!token)
       return res.status(401).json({ message: "No refresh token provided" });
 
@@ -125,20 +133,39 @@ async function refreshToken(req, res, next) {
         decoded.role,
       );
 
-      // OPCIONAL
       const newRefreshToken = generateRefreshToken(
         decoded.userId,
         decoded.displayName,
         decoded.role,
       );
 
+      res.cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      });
+
       res
         .status(200)
-        .json({ token: newAccessToken, refreshToken: newRefreshToken });
+        .json({ token: newAccessToken });
     });
   } catch (error) {
     next(error);
   }
 }
 
-export { checkEmail, login, register, refreshToken };
+async function logout(req, res, next) {
+  try {
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export { checkEmail, login, register, refreshToken, logout };

@@ -5,6 +5,7 @@ import {
   login,
   register,
   refreshToken,
+  logout
 } from "../controllers/authController.js";
 import validate from "../middlewares/validation.js";
 import { authLimiter } from "../middlewares/rateLimiter.js";
@@ -143,5 +144,19 @@ router.post("/refresh", refreshToken);
  *         description: Retorna si está tomado o no
  */
 router.get("/check-email", [queryEmailValidation()], validate, checkEmail);
+
+router.get("/check-email", [queryEmailValidation()], validate, checkEmail);
+
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Cierra la sesión y limpia las cookies
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: Responde con éxito
+ */
+router.post("/logout", logout);
 
 export default router;

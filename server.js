@@ -11,6 +11,7 @@ import logger from "./src/middlewares/logger.js";
 import { apiLimiter } from "./src/middlewares/rateLimiter.js";
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './src/config/swagger.js';
+import cookieParser from 'cookie-parser';
 import routes from "./src/routes/index.js";
 
 // Configurar manejadores globales ANTES de crear la app
@@ -46,6 +47,7 @@ app.use(helmet());
 
 // Middlewares en el orden correcto
 app.use(express.json());
+app.use(cookieParser());
 app.use(logger);
 
 // Configurar Pug

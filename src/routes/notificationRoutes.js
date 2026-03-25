@@ -23,9 +23,46 @@ import {
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Notifications
+ *   description: Endpoints for user notifications
+ */
+
+/**
+ * @swagger
+ * /notifications:
+ *   get:
+ *     summary: Obtiene todas las notificaciones (admin)
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de notificaciones
+ */
 // Obtener todas las notificaciones (admin)
 router.get("/notifications", authMiddleware, isAdmin, getNotifications);
 
+/**
+ * @swagger
+ * /notifications/unread/{userId}:
+ *   get:
+ *     summary: Obtiene notificaciones no leídas de un usuario
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Notificaciones no leídas
+ */
 // Obtener notificaciones no leídas por usuario
 router.get(
   "/notifications/unread/:userId",
@@ -35,6 +72,24 @@ router.get(
   getUnreadNotificationsByUser
 );
 
+/**
+ * @swagger
+ * /notifications/user/{userId}:
+ *   get:
+ *     summary: Obtiene todas las notificaciones de un usuario
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Lista de notificaciones del usuario
+ */
 // Obtener notificaciones por usuario
 router.get(
   "/notifications/user/:userId",
@@ -44,6 +99,24 @@ router.get(
   getNotificationByUser
 );
 
+/**
+ * @swagger
+ * /notifications/{id}:
+ *   get:
+ *     summary: Obtiene una notificación por ID
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Datos de la notificación
+ */
 // Obtener notificación por ID
 router.get(
   "/notifications/:id",
@@ -53,6 +126,32 @@ router.get(
   getNotificationById
 );
 
+/**
+ * @swagger
+ * /notifications:
+ *   post:
+ *     summary: Crea una nueva notificación
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - user
+ *               - message
+ *             properties:
+ *               user:
+ *                 type: string
+ *               message:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Notificación creada exitosamente
+ */
 // Crear nueva notificación
 router.post(
   "/notifications",
@@ -62,6 +161,24 @@ router.post(
   createNotification
 );
 
+/**
+ * @swagger
+ * /notifications/{id}/mark-read:
+ *   patch:
+ *     summary: Marca una notificación como leída
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Notificación marcada como leída
+ */
 // Marcar una notificación como leída
 router.patch(
   "/notifications/:id/mark-read",
@@ -71,6 +188,24 @@ router.patch(
   markAsRead
 );
 
+/**
+ * @swagger
+ * /notifications/user/{userId}/mark-all-read:
+ *   patch:
+ *     summary: Marca todas las notificaciones de un usuario como leídas
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Notificaciones marcadas exitosamente
+ */
 // Marcar todas las notificaciones de un usuario como leídas
 router.patch(
   "/notifications/user/:userId/mark-all-read",
@@ -80,6 +215,35 @@ router.patch(
   markAllAsReadByUser
 );
 
+/**
+ * @swagger
+ * /notifications/{id}:
+ *   put:
+ *     summary: Actualiza una notificación (admin)
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               message:
+ *                 type: string
+ *               isRead:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Notificación actualizada
+ */
 // Actualizar notificación
 router.put(
   "/notifications/:id",
@@ -94,6 +258,24 @@ router.put(
   updateNotification
 );
 
+/**
+ * @swagger
+ * /notifications/{id}:
+ *   delete:
+ *     summary: Elimina una notificación
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Notificación eliminada
+ */
 // Eliminar notificación
 router.delete(
   "/notifications/:id",

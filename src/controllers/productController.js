@@ -71,7 +71,16 @@ async function getProductByCategory(req, res, next) {
 
 async function createProduct(req, res, next) {
   try {
-    const { name, description, price, stock, imagesUrl, category } = req.body;
+    let { name, description, price, stock, imagesUrl, category } = req.body;
+
+    // Support Multer Cloudinary Uploads
+    if (req.files && req.files.length > 0) {
+      const uploadedUrls = req.files.map(file => file.path);
+      // Append or replace depending on what was sent
+      if (typeof imagesUrl === 'string') imagesUrl = [imagesUrl, ...uploadedUrls];
+      else if (Array.isArray(imagesUrl)) imagesUrl = [...imagesUrl, ...uploadedUrls];
+      else imagesUrl = uploadedUrls;
+    }
 
     const newProduct = await Product.create({
       name,
@@ -93,7 +102,15 @@ async function createProduct(req, res, next) {
 async function updateProduct(req, res, next) {
   try {
     const id = req.params.id;
-    const { name, description, price, stock, imagesUrl, category } = req.body;
+    let { name, description, price, stock, imagesUrl, category } = req.body;
+
+    // Support Multer Cloudinary Uploads
+    if (req.files && req.files.length > 0) {
+      const uploadedUrls = req.files.map(file => file.path);
+      if (typeof imagesUrl === 'string') imagesUrl = [imagesUrl, ...uploadedUrls];
+      else if (Array.isArray(imagesUrl)) imagesUrl = [...imagesUrl, ...uploadedUrls];
+      else imagesUrl = uploadedUrls;
+    }
 
     // Validar que al menos un campo esté presente
     if (
