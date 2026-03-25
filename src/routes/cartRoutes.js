@@ -23,8 +23,22 @@ import {
 
 const router = express.Router();
 
-router.get("/cart", authMiddleware, isAdmin, getCarts);
-
+/**
+ * @swagger
+ * /cart/user/{id}:
+ *   get:
+ *     summary: Obtiene el carrito de un usuario
+ *     tags: [Cart]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Datos del carrito
+ */
 router.get(
   "/cart/user/:id",
   authMiddleware,
@@ -33,6 +47,28 @@ router.get(
   getCartByUser,
 );
 
+/**
+ * @swagger
+ * /cart/add-product:
+ *   post:
+ *     summary: Agrega un producto al carrito
+ *     tags: [Cart]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [productId, quantity]
+ *             properties:
+ *               productId:
+ *                 type: string
+ *               quantity:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Producto agregado
+ */
 router.post(
   "/cart/add-product",
   authMiddleware,

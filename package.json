@@ -36,7 +36,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.3",
     "nodemon": "^3.1.10",
-    "pug": "^3.0.4"
+    "pug": "^3.0.4",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.5",

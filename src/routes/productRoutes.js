@@ -34,8 +34,56 @@ import {
 const router = express.Router();
 
 // Obtener todos los productos con paginación
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: Obtiene todos los productos con paginación
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *     responses:
+ *       200:
+ *         description: Lista de productos
+ */
 router.get("/products", [...paginationValidation()], validate, getProducts);
 // Buscar productos con filtros
+/**
+ * @swagger
+ * /products/search:
+ *   get:
+ *     summary: Busca productos con filtros avanzados
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: minPrice
+ *         schema:
+ *           type: number
+ *       - in: query
+ *         name: maxPrice
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Resultados de búsqueda
+ */
 router.get(
   "/products/search",
   [
@@ -52,6 +100,22 @@ router.get(
   searchProducts
 );
 // Obtener productos por categoría
+/**
+ * @swagger
+ * /products/category/{idCategory}:
+ *   get:
+ *     summary: Obtiene productos por ID de categoría
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: idCategory
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Lista de productos de la categoría
+ */
 router.get(
   "/products/category/:idCategory",
   [mongoIdValidation("idCategory", "Category ID")],
@@ -59,8 +123,36 @@ router.get(
   getProductByCategory
 );
 // Obtener los productos más vendidos
+/**
+ * @swagger
+ * /products/bestsellers:
+ *   get:
+ *     summary: Obtiene los productos más vendidos
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: Lista de bestsellers
+ */
 router.get("/products/bestsellers", getBestSellers);
 // Obtener producto por ID
+/**
+ * @swagger
+ * /products/{id}:
+ *   get:
+ *     summary: Obtiene un producto por su ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Datos del producto
+ *       404:
+ *         description: Producto no encontrado
+ */
 router.get("/products/:id", [mongoIdValidation("id", "Product ID")], validate, getProductById);
 // Crear producto (solo admin)
 router.post(

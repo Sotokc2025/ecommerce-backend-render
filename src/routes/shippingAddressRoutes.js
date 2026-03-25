@@ -54,6 +54,16 @@ router.post(
   createShippingAddress
 );
 
+/**
+ * @swagger
+ * /shipping-address:
+ *   get:
+ *     summary: Obtiene todas las direcciones de envío del usuario
+ *     tags: [Shipping]
+ *     responses:
+ *       200:
+ *         description: Lista de direcciones
+ */
 // Obtener todas las direcciones del usuario
 router.get("/shipping-address", authMiddleware, getUserAddresses);
 

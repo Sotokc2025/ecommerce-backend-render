@@ -14,6 +14,16 @@ import { mongoIdValidation, bodyMongoIdValidation } from "../middlewares/validat
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * /wishList:
+ *   get:
+ *     summary: Obtiene la lista de deseos del usuario
+ *     tags: [Wishlist]
+ *     responses:
+ *       200:
+ *         description: Lista de deseos
+ */
 // Obtener la wishlist del usuario
 router.get("/wishList", authMiddleware, getUserWishList);
 

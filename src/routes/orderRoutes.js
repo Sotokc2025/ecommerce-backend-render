@@ -26,10 +26,22 @@ import {
 
 const router = express.Router();
 
-// Obtener todas las órdenes (admin)
-router.get("/orders", authMiddleware, isAdmin, getOrders);
-
-// Obtener órdenes por usuario
+/**
+ * @swagger
+ * /orders/user/{userId}:
+ *   get:
+ *     summary: Obtiene las órdenes de un usuario
+ *     tags: [Orders]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Lista de órdenes
+ */
 router.get(
   "/orders/user/:userId",
   authMiddleware,
@@ -38,16 +50,23 @@ router.get(
   getOrdersByUser
 );
 
-// Obtener orden por ID
-router.get(
-  "/orders/:id",
-  authMiddleware,
-  [mongoIdValidation("id", "Order ID")],
-  validate,
-  getOrderById
-);
-
-// Crear nueva orden
+/**
+ * @swagger
+ * /orders:
+ *   post:
+ *     summary: Crea una nueva orden
+ *     tags: [Orders]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [user, products, shippingAddress, paymentMethod]
+ *     responses:
+ *       201:
+ *         description: Orden creada
+ */
 router.post(
   "/orders",
   authMiddleware,

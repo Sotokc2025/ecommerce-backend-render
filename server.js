@@ -9,6 +9,8 @@ import errorHandler from "./src/middlewares/errorHandler.js";
 import setupGlobalErrorHandlers from "./src/middlewares/globalErrorHandler.js";
 import logger from "./src/middlewares/logger.js";
 import { apiLimiter } from "./src/middlewares/rateLimiter.js";
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './src/config/swagger.js';
 import routes from "./src/routes/index.js";
 
 // Configurar manejadores globales ANTES de crear la app
@@ -16,9 +18,15 @@ setupGlobalErrorHandlers();
 
 export const app = express();
 
-const allowedOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',')
-  : ['http://localhost:3001', 'http://localhost:3000', 'http://127.0.0.1:3001', 'http://localhost:5173', 'http://127.0.0.1:5173'];
+const allowedOrigins = (process.env.CORS_ORIGINS || process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map(origin => origin.trim())
+  .filter(origin => origin !== "");
+
+// Fallback si no hay variables de entorno (solo desarrollo)
+if (allowedOrigins.length === 0) {
+  allowedOrigins.push('http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173');
+}
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -86,6 +94,9 @@ app.get("/status", (req, res) => {
     uptime
   });
 });
+
+// Documentación Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api", routes);
 
