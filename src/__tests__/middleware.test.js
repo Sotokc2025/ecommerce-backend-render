@@ -1,3 +1,4 @@
+// @ts-check
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import isAdmin from '../middlewares/isAdminMiddleware.js';

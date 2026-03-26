@@ -1,3 +1,4 @@
+// @ts-check
 import Notification from "../models/notification.js";
 
 async function getNotifications(req, res, next) {

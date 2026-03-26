@@ -1,3 +1,4 @@
+// @ts-check
 import Category from "../models/category.js";
 
 async function getCategories(req, res, next) {

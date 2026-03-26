@@ -1,3 +1,4 @@
+// @ts-check
 import { describe, it, expect } from 'vitest';
 
 describe('Suite de Pruebas Unitarias - TyMCO Backend', () => {

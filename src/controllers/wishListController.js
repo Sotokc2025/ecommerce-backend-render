@@ -1,3 +1,4 @@
+// @ts-check
 import Product from "../models/product.js";
 import WishList from "../models/wishList.js";
 

@@ -1,17 +1,38 @@
+// @ts-check
 import jwt from "jsonwebtoken";
 
-const authMiddleware = (req, res, next) => {
-  const token = req.headers["authorization"]?.split(" ")[1];
+/**
+ * @typedef {Object} UserPayload
+ * @property {string} userId
+ * @property {string} role
+ * 
+ * @typedef {import('express').Request & { user?: UserPayload }} AuthRequest
+ * @typedef {import('express').Response} ExpressResponse
+ * @typedef {import('express').NextFunction} NextFunction
+ * 
+ * @typedef {(req: AuthRequest, res: ExpressResponse, next: NextFunction) => any} AuthRequestHandler
+ */
 
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
+/** @type {AuthRequestHandler} */
+const authMiddleware = (req, res, next) => {
+  let token = req.headers["authorization"]?.split(" ")[1];
+
+  if (!token && req.cookies) {
+    token = req.cookies.token;
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized - Context 7: No token provided" });
+  }
+
+  const secret = process.env.JWT_SECRET || "default_secret";
+  jwt.verify(token, secret, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: "Forbidden" });
+      return res.status(403).json({ message: "Forbidden - Context 7: Invalid or expired token" });
     }
-    req.user = decoded;
+    
+    // Inyectamos el payload tipado.
+    req.user = /** @type {UserPayload} */ (decoded);
     next();
   });
 };

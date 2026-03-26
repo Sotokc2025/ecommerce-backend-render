@@ -1,3 +1,4 @@
+// @ts-check
 import ShippingAddress from "../models/shippingAddress.js";
 
 // Crear una nueva dirección de envío

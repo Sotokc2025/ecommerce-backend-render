@@ -1,9 +1,16 @@
+// @ts-check
 import Product from "../models/product.js";
-
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
 async function getProducts(req, res, next) {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    // @ts-ignore
+    const page = parseInt(String(req.query.page || 1));
+    // @ts-ignore
+    const limit = parseInt(String(req.query.limit || 10));
     const skip = (page - 1) * limit;
 
     const products = await Product.find()
@@ -28,10 +35,15 @@ async function getProducts(req, res, next) {
     next(error);
   }
 }
-
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
 async function getBestSellers(req, res, next) {
   try {
-    const limit = parseInt(req.query.limit) || 12;
+    const query = /** @type {any} */ (req.query);
+    const limit = parseInt(query.limit) || 12;
     const products = await Product.find()
       .populate("category")
       .sort({ soldCount: -1, name: 1 })
@@ -42,7 +54,11 @@ async function getBestSellers(req, res, next) {
     next(error);
   }
 }
-
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
 async function getProductById(req, res, next) {
   try {
     const id = req.params.id;
@@ -55,7 +71,11 @@ async function getProductById(req, res, next) {
     next(error);
   }
 }
-
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
 async function getProductByCategory(req, res, next) {
   try {
     const id = req.params.idCategory;
@@ -68,20 +88,24 @@ async function getProductByCategory(req, res, next) {
     next(error);
   }
 }
-
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
 async function createProduct(req, res, next) {
   try {
-    let { name, description, price, stock, imagesUrl, category } = req.body;
-
+    let { name, description, price, stock, imagesUrl, category } = /** @type {any} */ (req.body);
+ 
+    const files = /** @type {any} */ (req.files);
     // Support Multer Cloudinary Uploads
-    if (req.files && req.files.length > 0) {
-      const uploadedUrls = req.files.map(file => file.path);
+    if (files && files.length > 0) {
+      const uploadedUrls = files.map((/** @type {any} */ file) => file.path);
       // Append or replace depending on what was sent
       if (typeof imagesUrl === 'string') imagesUrl = [imagesUrl, ...uploadedUrls];
       else if (Array.isArray(imagesUrl)) imagesUrl = [...imagesUrl, ...uploadedUrls];
       else imagesUrl = uploadedUrls;
     }
-
     const newProduct = await Product.create({
       name,
       description,
@@ -94,24 +118,32 @@ async function createProduct(req, res, next) {
     const populatedProduct = await Product.findById(newProduct._id).populate("category");
 
     res.status(201).json(populatedProduct);
-  } catch (error) {
+  }
+  catch (error) {
     next(error);
   }
 }
-
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
 async function updateProduct(req, res, next) {
   try {
-    const id = req.params.id;
-    let { name, description, price, stock, imagesUrl, category } = req.body;
+    const params = /** @type {any} */ (req.params);
+    const body = /** @type {any} */ (req.body);
+    const files = /** @type {any} */ (req.files);
+
+    const id = params.id;
+    let { name, description, price, stock, imagesUrl, category } = body;
 
     // Support Multer Cloudinary Uploads
-    if (req.files && req.files.length > 0) {
-      const uploadedUrls = req.files.map(file => file.path);
+    if (files && files.length > 0) {
+      const uploadedUrls = files.map((/** @type {any} */ file) => file.path);
       if (typeof imagesUrl === 'string') imagesUrl = [imagesUrl, ...uploadedUrls];
-      else if (Array.isArray(imagesUrl)) imagesUrl = [...imagesUrl, ...uploadedUrls];
+      else if (Array.isArray(imagesUrl)) imagesUrl = Array.isArray(imagesUrl) ? [...imagesUrl, ...uploadedUrls] : uploadedUrls;
       else imagesUrl = uploadedUrls;
     }
-
     // Validar que al menos un campo esté presente
     if (
       !name &&
@@ -125,12 +157,10 @@ async function updateProduct(req, res, next) {
         message: "At least one field must be provided to update",
       });
     }
-
     const product = await Product.findById(id);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-
     // Actualizar solo los campos proporcionados
     if (name !== undefined) product.name = name;
     if (description !== undefined) product.description = description;
@@ -144,11 +174,16 @@ async function updateProduct(req, res, next) {
     const updatedProduct = await Product.findById(id).populate("category");
 
     res.status(200).json(updatedProduct);
-  } catch (error) {
+  }
+  catch (error) {
     next(error);
   }
 }
-
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
 async function deleteProduct(req, res, next) {
   try {
     const id = req.params.id;
@@ -157,11 +192,16 @@ async function deleteProduct(req, res, next) {
       return res.status(404).json({ message: "Product not found" });
     }
     res.status(204).send();
-  } catch (error) {
+  }
+  catch (error) {
     next(error);
   }
 }
-
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
 async function searchProducts(req, res, next) {
   try {
     const {
@@ -176,12 +216,14 @@ async function searchProducts(req, res, next) {
       limit = 10,
     } = req.query;
 
-    let filters = {};
-
+    let filters = /** @type {any} */ ({});
+ 
     if (q) {
+      // Blindaje contra ReDoS: Limitar longitud y escapar caracteres especiales
+      const sanitizedQ = String(q).substring(0, 50).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       filters.$or = [
-        { name: { $regex: q, $options: "i" } },
-        { description: { $regex: q, $options: "i" } },
+        { name: { $regex: sanitizedQ, $options: "i" } },
+        { description: { $regex: sanitizedQ, $options: "i" } },
       ];
     }
 
@@ -191,8 +233,10 @@ async function searchProducts(req, res, next) {
 
     if (minPrice || maxPrice) {
       filters.price = {};
-      if (minPrice) filters.price.$gte = parseFloat(minPrice);
-      if (maxPrice) filters.price.$lte = parseFloat(maxPrice);
+      // @ts-ignore
+      if (minPrice) filters.price.$gte = parseFloat(String(minPrice));
+      // @ts-ignore
+      if (maxPrice) filters.price.$lte = parseFloat(String(maxPrice));
     }
 
     if (inStock === "true") {
@@ -203,33 +247,42 @@ async function searchProducts(req, res, next) {
 
     if (sort) {
       const sortOrder = order === "desc" ? -1 : 1;
-      sortOptions[sort] = sortOrder;
+      filters[String(sort)] = sortOrder;
     } else {
-      sortOptions.name = 1;
+      // @ts-ignore
+      filters.name = 1;
     }
 
-    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const skip = (parseInt(String(page)) - 1) * parseInt(String(limit));
 
+    // @ts-ignore
     const products = await Product.find(filters)
       .populate("category")
-      .sort(sortOptions)
+      // @ts-ignore
+      .sort(filters)
       .skip(skip)
+      // @ts-ignore
       .limit(limit);
 
     const totalResults = await Product.countDocuments(filters);
-    const totalPages = Math.ceil(totalResults / parseInt(limit));
+    // @ts-ignore
+    const totalPages = Math.ceil(totalResults / parseInt(String(limit)));
 
     res.status(200).json({
       products,
       pagination: {
-        currentPage: parseInt(page),
+        // @ts-ignore
+        currentPage: parseInt(String(page)),
         totalPages,
         totalResults,
-        hasNext: parseInt(page) < totalPages,
-        hasPrev: parseInt(page) > 1,
+        // @ts-ignore
+        hasNext: parseInt(String(page)) < totalPages,
+        // @ts-ignore
+        hasPrev: parseInt(String(page)) > 1,
       },
     });
-  } catch (error) {
+  }
+  catch (error) {
     next(error);
   }
 }

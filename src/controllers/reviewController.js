@@ -1,3 +1,4 @@
+// @ts-check
 import Product from "../models/product.js";
 import Review from "../models/review.js";
 

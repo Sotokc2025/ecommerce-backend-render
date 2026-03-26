@@ -1,3 +1,4 @@
+// @ts-check
 export default {
   findOne: jest.fn(),
   findById: jest.fn(),

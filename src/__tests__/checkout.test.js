@@ -1,3 +1,4 @@
+// @ts-check
 import { describe, it, expect } from 'vitest';
 
 describe('FASE C - Validación del Flujo de Compra (Backend)', () => {

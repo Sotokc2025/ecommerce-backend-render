@@ -1,3 +1,4 @@
+// @ts-check
 import { tymcoAIService } from "../services/tymco-ai.service.js";
 
 /**

@@ -1,3 +1,4 @@
+// @ts-check
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
@@ -36,6 +37,16 @@ const productSchema = new mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
+    required: true,
+  },
+  brand: {
+    type: String,
+    enum: ["Sayer-Lack", "TyMCO", "Standard"],
+    default: "Standard",
+  },
+  source: {
+    type: String,
+    enum: ["Sayer-Lack", "TyMCO"],
     required: true,
   },
 });

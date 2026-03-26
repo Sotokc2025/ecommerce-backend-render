@@ -1,3 +1,4 @@
+// @ts-check
 /* backend/src/scripts/seed.js */
 import "dotenv/config";
 import mongoose from "mongoose";

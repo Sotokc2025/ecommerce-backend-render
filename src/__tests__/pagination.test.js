@@ -1,3 +1,4 @@
+// @ts-check
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { getProducts } from '../controllers/productController.js';
 import Product from '../models/product.js';

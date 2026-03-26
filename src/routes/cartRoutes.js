@@ -1,5 +1,6 @@
+// @ts-check
 import express from "express";
-import { body, param } from "express-validator";
+import { body } from "express-validator";
 import {
   addProductToCart,
   createCart,
@@ -7,6 +8,7 @@ import {
   getCartById,
   getCartByUser,
   getCarts,
+  syncCartItems,
   updateCart,
   updateCartItem,
   removeCartItem,
@@ -21,144 +23,136 @@ import {
   quantityValidation,
 } from "../middlewares/validators.js";
 
+/**
+ * Express Router para el módulo de Carrito (Context 7 Standard). 🛡️🛒
+ * Gestiona la persistencia atómica del estado de Zustand.
+ * @type {import('express').Router}
+ */
 const router = express.Router();
 
 /**
  * @swagger
- * /cart/user/{id}:
+ * tags:
+ *   name: Cart
+ *   description: Gestión de carritos de compra e integración Context 7
+ */
+
+/**
+ * @swagger
+ * /api/cart:
  *   get:
- *     summary: Obtiene el carrito de un usuario
+ *     summary: Lista todos los carritos (Admin Only) 🛡️🔑
  *     tags: [Cart]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Datos del carrito
+ */
+router.get("/", authMiddleware, isAdmin, getCarts);
+
+/**
+ * @swagger
+ * /api/cart/user/{id}:
+ *   get:
+ *     summary: Obtiene el carrito del usuario autenticado 🛡️👤
+ *     tags: [Cart]
  */
 router.get(
-  "/cart/user/:id",
+  "/user/:id",
   authMiddleware,
-  [mongoIdValidation("id", "User ID")],
+  mongoIdValidation("id", "User ID"),
   validate,
-  getCartByUser,
+  getCartByUser
 );
 
 /**
  * @swagger
- * /cart/add-product:
+ * /api/cart/sync:
  *   post:
- *     summary: Agrega un producto al carrito
+ *     summary: Sincronización ATÓMICA e IDEMPOTENTE (Handshake) 🛡️🔄🤝
  *     tags: [Cart]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [productId, quantity]
- *             properties:
- *               productId:
- *                 type: string
- *               quantity:
- *                 type: integer
- *     responses:
- *       200:
- *         description: Producto agregado
  */
 router.post(
-  "/cart/add-product",
+  "/sync",
   authMiddleware,
-  [
-    bodyMongoIdValidation("productId", "Product ID"),
-    quantityValidation("quantity", true),
-  ],
+  body("products").isArray().withMessage("Products must be an array"),
+  body("products.*.productId").isMongoId().withMessage("Invalid Product ID"),
+  body("products.*.quantity").isInt({ min: 1 }).withMessage("Quantity must be >= 1"),
+  validate,
+  syncCartItems
+);
+
+/**
+ * @swagger
+ * /api/cart/add-product:
+ *   post:
+ *     summary: Agrega (incrementa) un producto al carrito 🛡️➕
+ *     tags: [Cart]
+ */
+router.post(
+  "/add-product",
+  authMiddleware,
+  bodyMongoIdValidation("productId", "Product ID"),
+  quantityValidation("quantity", true),
   validate,
   addProductToCart,
 );
 
-router.get(
-  "/cart/:id",
-  authMiddleware,
-  isAdmin,
-  [mongoIdValidation("id", "Cart ID")],
-  validate,
-  getCartById,
-);
-
-router.post(
-  "/cart",
-  authMiddleware,
-  [
-    bodyMongoIdValidation("user", "User"),
-    body("products")
-      .notEmpty()
-      .withMessage("Products are required")
-      .isArray({ min: 1 })
-      .withMessage("Products must be a non-empty array"),
-    bodyMongoIdValidation("products.*.product", "Product ID"),
-    quantityValidation("products.*.quantity"),
-  ],
-  validate,
-  createCart,
-);
-
+/**
+ * @swagger
+ * /api/cart/update-item:
+ *   put:
+ *     summary: Actualiza manualmente la cantidad de un item 🛡️🔧
+ *     tags: [Cart]
+ */
 router.put(
-  "/cart-item/:id",
+  "/update-item",
   authMiddleware,
-  [
-    mongoIdValidation("id", "Cart ID"),
-    bodyMongoIdValidation("user", "User ID", true),
-    body("products")
-      .optional()
-      .isArray({ min: 1 })
-      .withMessage("Products must be a non-empty array"),
-    bodyMongoIdValidation("products.*.product", "Product ID", true),
-    quantityValidation("products.*.quantity", true),
-  ],
-  validate,
-  updateCart,
-);
-
-router.delete(
-  "/cart/:id",
-  authMiddleware,
-  [mongoIdValidation("id", "Cart ID")],
-  validate,
-  deleteCart,
-);
-
-// Rutas nuevas
-router.put(
-  "/cart/update-item",
-  authMiddleware,
-  [
-    bodyMongoIdValidation("productId", "Product ID"),
-    quantityValidation("quantity", true),
-  ],
+  bodyMongoIdValidation("productId", "Product ID"),
+  quantityValidation("quantity", false),
   validate,
   updateCartItem,
 );
 
+/**
+ * @swagger
+ * /api/cart/remove-item/{productId}:
+ *   delete:
+ *     summary: Elimina un producto del carrito 🛡️🗑️
+ *     tags: [Cart]
+ */
 router.delete(
-  "/cart/remove-item/:productId",
+  "/remove-item/:productId",
   authMiddleware,
-  [
-    mongoIdValidation("productId", "Product ID"),
-  ],
+  mongoIdValidation("productId", "Product ID"),
   validate,
-  removeCartItem,
+  removeCartItem
 );
 
+/**
+ * @swagger
+ * /api/cart/clear:
+ *   post:
+ *     summary: Vacía completamente el carrito del usuario 🛡️🧹
+ *     tags: [Cart]
+ */
 router.post(
-  "/cart/clear",
+  "/clear",
   authMiddleware,
-  [],
-  validate,
-  clearCartItems,
+  clearCartItems
 );
+
+// --- RUTAS DE GESTIÓN AVANZADA (CRUD) ---
+
+router.get("/:id", authMiddleware, isAdmin, mongoIdValidation("id", "Cart ID"), validate, getCartById);
+
+router.post(
+  "/",
+  authMiddleware,
+  bodyMongoIdValidation("user", "User ID"),
+  body("products").isArray({ min: 1 }).withMessage("Inventory items required"),
+  validate,
+  createCart,
+);
+
+router.put("/:id", authMiddleware, isAdmin, mongoIdValidation("id", "Cart ID"), validate, updateCart);
+
+router.delete("/:id", authMiddleware, isAdmin, mongoIdValidation("id", "Cart ID"), validate, deleteCart);
 
 export default router;

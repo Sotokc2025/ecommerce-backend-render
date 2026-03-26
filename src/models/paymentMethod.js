@@ -1,3 +1,4 @@
+// @ts-check
 import mongoose from "mongoose";
 
 const paymentMethodSchema = new mongoose.Schema({

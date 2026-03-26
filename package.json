@@ -13,12 +13,13 @@
     "test:coverage": "vitest run --coverage",
     "seedProducts": "node ./src/seed/productsCategories.js",
     "seedAll": "node ./src/seed/loadJsonData.js",
+    "massive-sync": "node ./src/seed/massiveSync.js",
     "check-db": "node ./tools/check_db.js",
     "reset-tests": "node ./tools/reset_tests.js",
     "seed": "node src/scripts/seed.js"
   },
   "keywords": [],
-  "author": "Karlita Soto",
+  "author": "Karlita C. Soto",
   "license": "ISC",
   "description": "",
   "dependencies": {

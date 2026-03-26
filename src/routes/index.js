@@ -1,3 +1,4 @@
+// @ts-check
 import express from "express";
 import authRoutes from "./authRoutes.js";
 import cartRoutes from "./cartRoutes.js";

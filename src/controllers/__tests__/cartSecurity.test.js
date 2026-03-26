@@ -1,3 +1,4 @@
+// @ts-check
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { getCartByUser, addProductToCart, clearCartItems } from '../cartController.js';
 import Cart from '../../models/cart.js';

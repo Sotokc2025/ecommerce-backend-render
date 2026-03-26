@@ -1,3 +1,4 @@
+// @ts-check
 import { ChatGroq } from "@langchain/groq";
 import { HumanMessage, SystemMessage, AIMessage } from "@langchain/core/messages";
 import Product from "../models/product.js";

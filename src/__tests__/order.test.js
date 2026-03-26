@@ -1,3 +1,4 @@
+// @ts-check
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createOrder } from '../controllers/orderController.js';
 import Order from '../models/order.js';

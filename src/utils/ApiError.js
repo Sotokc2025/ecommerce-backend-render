@@ -1,3 +1,4 @@
+// @ts-check
 // Clase de error personalizada para la API
 export class ApiError extends Error {
   constructor(statusCode, message, isOperational = true, stack = "") {

@@ -1,3 +1,4 @@
+// @ts-check
 import rateLimit from "express-rate-limit";
 
 // Rate limiter para autenticación (login/register)

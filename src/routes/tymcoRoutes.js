@@ -1,3 +1,4 @@
+// @ts-check
 import express from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import { tymcoChat } from "../controllers/tymcoController.js";

@@ -1,16 +1,33 @@
+// @ts-check
 import Cart from "../models/cart.js";
 
+/**
+ * @typedef {import('../middlewares/authMiddleware').UserPayload} UserPayload
+ * @typedef {import('../middlewares/authMiddleware').AuthRequest} AuthRequest
+ * @typedef {import('express').Response} ExpressResponse
+ * @typedef {import('express').NextFunction} NextFunction
+ * 
+ * @typedef {(req: AuthRequest, res: ExpressResponse, next: NextFunction) => Promise<any>} AuthRequestHandler
+ */
+
+/** 
+ * Interfaz extendida para documentos de Mongoose (Context 7 Standard) 🛡️🧬
+ * @typedef {import('mongoose').Document & { products: Array<{product: any, quantity: number}>, user: any, save: Function, populate: Function }} CartDocument
+ */
+
+/** @type {AuthRequestHandler} */
 async function getCarts(req, res, next) {
   try {
     const carts = await Cart.find()
       .populate("user")
       .populate("products.product");
-    res.json(carts);
+    return res.json(carts);
   } catch (error) {
     next(error);
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function getCartById(req, res, next) {
   try {
     const id = req.params.id;
@@ -20,19 +37,22 @@ async function getCartById(req, res, next) {
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
-    res.json(cart);
+    return res.json(cart);
   } catch (error) {
     next(error);
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function getCartByUser(req, res, next) {
   try {
     const userId = req.params.id;
+    const currentUser = req.user;
 
-    // BOLA Fix: Check if user is owner or admin
-    if (userId !== req.user?.userId && req.user?.role !== "admin") {
-      return res.status(403).json({ message: "Forbidden: You can only view your own cart" });
+    const authenticatedUserId = currentUser?.userId;
+
+    if (userId !== authenticatedUserId && currentUser?.role !== "admin") {
+      return res.status(403).json({ message: "Forbidden: Access denied to other user's cart" });
     }
 
     const cart = await Cart.findOne({ user: userId })
@@ -40,52 +60,42 @@ async function getCartByUser(req, res, next) {
       .populate("products.product");
 
     if (!cart) {
-      return res.status(200).json({
-        message: "No cart found for this user",
-        cart: null,
-      });
+      return res.status(200).json({ message: "No cart found for this user", cart: null });
     }
-    res.json({ message: "Cart retrieved successfully", cart });
+    return res.json({ message: "Cart retrieved successfully", cart });
   } catch (error) {
     next(error);
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function createCart(req, res, next) {
   try {
     const { user, products } = req.body;
-
     const newCart = await Cart.create({ user, products });
     await newCart.populate("user");
     await newCart.populate("products.product");
-
-    res.status(201).json(newCart);
+    return res.status(201).json(newCart);
   } catch (error) {
     next(error);
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function updateCart(req, res, next) {
   try {
     const { id } = req.params;
     const { user, products } = req.body;
 
-    // Validar que al menos un campo sea proporcionado
     if (user === undefined && products === undefined) {
-      return res.status(400).json({
-        message:
-          "At least one field (user or products) must be provided for update",
-      });
+      return res.status(400).json({ message: "Context 7 Violation: User or products required" });
     }
 
-    // Construir objeto de actualización con campos proporcionados
     const updateData = {};
-    if (user !== undefined) updateData.user = user;
-    if (products !== undefined) updateData.products = products;
+    if (user !== undefined) Object.assign(updateData, { user });
+    if (products !== undefined) Object.assign(updateData, { products });
 
-    const updatedCart = await Cart.findByIdAndUpdate(id, updateData, {
-      new: true,
-    })
+    const updatedCart = await Cart.findByIdAndUpdate(id, updateData, { new: true })
       .populate("user")
       .populate("products.product");
 
@@ -99,11 +109,11 @@ async function updateCart(req, res, next) {
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function deleteCart(req, res, next) {
   try {
     const { id } = req.params;
     const deletedCart = await Cart.findByIdAndDelete(id);
-
     if (deletedCart) {
       return res.status(204).send();
     } else {
@@ -114,28 +124,26 @@ async function deleteCart(req, res, next) {
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function addProductToCart(req, res, next) {
   try {
     const { productId, quantity = 1 } = req.body;
     const userId = req.user?.userId;
 
     if (!userId) {
-      return res.status(401).json({ message: "Unauthorized: User not found in session" });
+      return res.status(401).json({ message: "Context 7: Unauthorized - Session required" });
     }
 
-    let cart = await Cart.findOne({ user: userId });
+    /** @type {CartDocument | null} */
+    let cart = /** @type {any} */ (await Cart.findOne({ user: userId }));
 
     if (!cart) {
-      cart = new Cart({
+      cart = /** @type {any} */ (new Cart({
         user: userId,
         products: [{ product: productId, quantity }],
-      });
+      }));
     } else {
-      // Verificar si el producto ya está en el carrito
-      const existingProductIndex = cart.products.findIndex(
-        (item) => item.product.toString() === productId,
-      );
-
+      const existingProductIndex = cart.products.findIndex((item) => item.product?.toString() === productId);
       if (existingProductIndex >= 0) {
         cart.products[existingProductIndex].quantity += quantity;
       } else {
@@ -143,89 +151,116 @@ async function addProductToCart(req, res, next) {
       }
     }
 
-    await cart.save();
-    await cart.populate("user");
-    await cart.populate("products.product");
+    if (cart) {
+      await cart.save();
+      await cart.populate("user");
+      await cart.populate("products.product");
+    }
 
-    res.status(200).json({
-      message: "Product added to cart successfully",
-      cart,
-    });
+    return res.status(200).json({ message: "Product added to cart", cart });
   } catch (error) {
     next(error);
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function updateCartItem(req, res, next) {
   try {
     const { productId, quantity } = req.body;
     const userId = req.user?.userId;
 
-    const cart = await Cart.findOne({ user: userId });
+    /** @type {CartDocument | null} */
+    const cart = /** @type {any} */ (await Cart.findOne({ user: userId }));
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
 
-    if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
-    }
-
-    const productIndex = cart.products.findIndex(
-      (item) => item.product.toString() === productId,
-    );
-
-    if (productIndex === -1) {
-      return res.status(404).json({ message: "Product not found in Cart" });
-    }
+    const productIndex = cart.products.findIndex((item) => item.product?.toString() === productId);
+    if (productIndex === -1) return res.status(404).json({ message: "Product not in Cart" });
 
     cart.products[productIndex].quantity = quantity;
-
     await cart.save();
     await cart.populate("user");
     await cart.populate("products.product");
 
-    res.json({ message: "Cart item updated", cart });
+    return res.json({ message: "Cart item updated", cart });
   } catch (error) {
     next(error);
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function removeCartItem(req, res, next) {
   try {
     const { productId } = req.params;
     const userId = req.user?.userId;
 
-    const cart = await Cart.findOne({ user: userId });
+    /** @type {CartDocument | null} */
+    const cart = /** @type {any} */ (await Cart.findOne({ user: userId }));
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
 
-    if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
-    }
-
-    cart.products = cart.products.filter(
-      (item) => item.product.toString() !== productId,
-    );
-
+    cart.products = cart.products.filter((item) => item.product?.toString() !== productId);
     await cart.save();
     await cart.populate("user");
     await cart.populate("products.product");
 
-    res.json({ message: "Product removed from cart", cart });
+    return res.json({ message: "Product removed from cart", cart });
   } catch (error) {
     next(error);
   }
 }
 
+/** @type {AuthRequestHandler} */
 async function clearCartItems(req, res, next) {
   try {
     const userId = req.user?.userId;
+    if (!userId) return res.status(401).json({ message: "Context 7: Session missing" });
 
-    const cart = await Cart.findOne({ user: userId });
+    /** @type {CartDocument | null} */
+    const cart = /** @type {any} */ (await Cart.findOne({ user: userId }));
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
 
-    if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
-    }
     cart.products = [];
     await cart.save();
     await cart.populate("user");
+    return res.json({ message: "Cart Context 7: Cleared", cart });
+  } catch (error) {
+    next(error);
+  }
+}
 
-    res.json({ message: "Cart cleared successfully", cart });
+/** 
+ * Sincronización ATÓMICA e IDEMPOTENTE (Context 7 Standard) 🛡️🔄🧬
+ * @type {AuthRequestHandler}
+ */
+async function syncCartItems(req, res, next) {
+  try {
+    const { products } = req.body;
+    const userId = req.user?.userId;
+
+    if (!Array.isArray(products)) {
+      return res.status(400).json({ message: "Format Error: Context 7 expects an array" });
+    }
+
+    /** @type {CartDocument | null} */
+    let cart = /** @type {any} */ (await Cart.findOne({ user: userId }));
+
+    const normalizedProducts = products.map((p) => ({
+      product: p.productId || p.id || p._id,
+      quantity: p.quantity,
+    }));
+
+    if (!cart) {
+      cart = /** @type {any} */ (new Cart({ user: userId, products: normalizedProducts }));
+    } else {
+      cart.products = normalizedProducts;
+    }
+
+    if (cart) {
+      await cart.save();
+      await cart.populate("user");
+      await cart.populate("products.product");
+    }
+
+    return res.json({ message: "Context 7 Sync Handshake Success", cart });
   } catch (error) {
     next(error);
   }
@@ -242,4 +277,5 @@ export {
   updateCartItem,
   removeCartItem,
   clearCartItems,
+  syncCartItems,
 };

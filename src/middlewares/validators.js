@@ -1,5 +1,14 @@
+// @ts-check
 import { body, param, query } from "express-validator";
 
+/**
+ * @typedef {import('express').RequestHandler} RequestHandler
+ */
+
+/**
+ * @param {boolean} optional
+ * @returns {any}
+ */
 export const emailValidation = (optional = false) => {
   const validator = body("email")
     .isEmail()
@@ -10,6 +19,9 @@ export const emailValidation = (optional = false) => {
   return optional ? validator.optional() : validator.notEmpty().withMessage("Email is required");
 };
 
+/**
+ * @returns {any}
+ */
 export const passwordValidation = () =>
   body("password")
     .isLength({ min: 6 })
@@ -19,6 +31,10 @@ export const passwordValidation = () =>
     .matches(/[a-zA-Z]/)
     .withMessage("Password must contain at least one letter");
 
+/**
+ * @param {boolean} optional
+ * @returns {any}
+ */
 export const displayNameValidation = (optional = false) => {
   const validator = body("displayName")
     .isLength({ min: 2, max: 50 })
@@ -31,6 +47,9 @@ export const displayNameValidation = (optional = false) => {
     : validator.notEmpty().withMessage("Display name is required");
 };
 
+/**
+ * @returns {any}
+ */
 export const phoneValidation = () =>
   body("phone")
     .optional()
@@ -39,11 +58,19 @@ export const phoneValidation = () =>
     .matches(/^[0-9]+$/)
     .withMessage("Phone must contain only numbers");
 
+/**
+ * @param {string} field
+ * @param {string|null} customLabel
+ * @returns {any}
+ */
 export const mongoIdValidation = (field = "id", customLabel = null) => {
   const label = customLabel || field;
   return param(field).isMongoId().withMessage(`${label} must be a valid MongoDB ObjectId`);
 };
 
+/**
+ * @returns {any[]}
+ */
 export const paginationValidation = () => [
   query("page").optional().isInt({ min: 1 }).withMessage("Page must be a positive integer"),
   query("limit")
@@ -52,15 +79,27 @@ export const paginationValidation = () => [
     .withMessage("Limit must be between 1 and 100"),
 ];
 
+/**
+ * @param {string} field
+ * @returns {any}
+ */
 export const priceValidation = (field = "price") =>
   body(field).isFloat({ min: 0 }).withMessage(`${field} must be a positive number`);
 
+/**
+ * @param {string} field
+ * @returns {any}
+ */
 export const priceOptionalValidation = (field = "price") =>
   body(field)
     .optional()
     .isFloat({ min: 0 })
     .withMessage(`${field} must be a positive number`);
 
+/**
+ * @param {string} field
+ * @returns {any}
+ */
 export const descriptionValidation = (field = "description") =>
   body(field)
     .optional()
@@ -69,28 +108,45 @@ export const descriptionValidation = (field = "description") =>
     .trim()
     .escape();
 
+/**
+ * @param {string} field
+ * @returns {any}
+ */
 export const urlValidation = (field = "url") =>
   body(field).optional().isURL().withMessage(`${field} must be a valid URL`);
 
-// Validación de MongoID en body (no en param)
+/**
+ * @param {string} field
+ * @param {string} label
+ * @param {boolean} optional
+ * @returns {any}
+ */
 export const bodyMongoIdValidation = (field, label, optional = false) => {
   const validator = body(field).isMongoId().withMessage(`Invalid ${label} format`);
-
   return optional ? validator.optional() : validator.notEmpty().withMessage(`${label} is required`);
 };
 
-// Validación de cantidad
+/**
+ * @param {string} field
+ * @param {boolean} optional
+ * @returns {any}
+ */
 export const quantityValidation = (field = "quantity", optional = false) => {
   const validator = body(field).isInt({ min: 1 }).withMessage(`${field} must be at least 1`);
-
   return optional ? validator.optional() : validator.notEmpty().withMessage(`${field} is required`);
 };
 
-// Validación de boolean
+/**
+ * @param {string} field
+ * @returns {any}
+ */
 export const booleanValidation = (field) =>
   body(field).optional().isBoolean().withMessage(`${field} must be a boolean`);
 
-// Validación de rating
+/**
+ * @param {boolean} optional
+ * @returns {any}
+ */
 export const ratingValidation = (optional = false) => {
   const validator = body("rating")
     .isInt({ min: 1, max: 5 })
@@ -99,7 +155,11 @@ export const ratingValidation = (optional = false) => {
   return optional ? validator.optional() : validator.notEmpty().withMessage("Rating is required");
 };
 
-// Validación de comentarios
+/**
+ * @param {string} field
+ * @param {number} maxLength
+ * @returns {any}
+ */
 export const commentValidation = (field = "comment", maxLength = 500) =>
   body(field)
     .optional()
@@ -108,7 +168,10 @@ export const commentValidation = (field = "comment", maxLength = 500) =>
     .trim()
     .escape();
 
-// Validación de mensaje
+/**
+ * @param {number} maxLength
+ * @returns {any}
+ */
 export const messageValidation = (maxLength = 500) =>
   body("message")
     .notEmpty()
@@ -118,7 +181,9 @@ export const messageValidation = (maxLength = 500) =>
     .withMessage(`Message must be between 1 and ${maxLength} characters`)
     .escape();
 
-// Validación de stock
+/**
+ * @returns {any}
+ */
 export const stockValidation = () =>
   body("stock")
     .notEmpty()
@@ -126,7 +191,10 @@ export const stockValidation = () =>
     .isInt({ min: 0 })
     .withMessage("Stock must be a non-negative integer");
 
-// Validación de order status
+/**
+ * @param {boolean} optional
+ * @returns {any}
+ */
 export const orderStatusValidation = (optional = false) => {
   const validator = body("status")
     .isIn(["pending", "processing", "shipped", "delivered", "cancelled"])
@@ -135,7 +203,10 @@ export const orderStatusValidation = (optional = false) => {
   return optional ? validator.optional() : validator.notEmpty().withMessage("Status is required");
 };
 
-// Validación de payment status
+/**
+ * @param {boolean} optional
+ * @returns {any}
+ */
 export const paymentStatusValidation = (optional = false) => {
   const validator = body("paymentStatus")
     .isIn(["pending", "paid", "failed", "refunded"])
@@ -146,28 +217,36 @@ export const paymentStatusValidation = (optional = false) => {
     : validator.notEmpty().withMessage("Payment status is required");
 };
 
-// Validación de shipping cost
+/**
+ * @returns {any}
+ */
 export const shippingCostValidation = () =>
   body("shippingCost")
     .optional()
     .isFloat({ min: 0 })
     .withMessage("Shipping cost must be a positive number");
 
-// Validación de card number
+/**
+ * @returns {any}
+ */
 export const cardNumberValidation = () =>
   body("cardNumber")
     .optional()
     .matches(/^\d{16}$/)
     .withMessage("Card number must be 16 digits");
 
-// Validación de expiry date
+/**
+ * @returns {any}
+ */
 export const expiryDateValidation = () =>
   body("expiryDate")
     .optional()
     .matches(/^(0[1-9]|1[0-2])\/\d{2}$/)
     .withMessage("Expiry date must be in MM/YY format");
 
-// Validación de payment type
+/**
+ * @returns {any}
+ */
 export const paymentTypeValidation = () =>
   body("type")
     .notEmpty()
@@ -175,14 +254,19 @@ export const paymentTypeValidation = () =>
     .isIn(["credit_card", "debit_card", "paypal", "bank_transfer", "cash_on_delivery"])
     .withMessage("Invalid payment method type");
 
-// Validación de role
+/**
+ * @returns {any}
+ */
 export const roleValidation = () =>
   body("role")
     .optional()
     .isIn(["admin", "customer", "guest"])
     .withMessage("Role must be admin, customer, or guest");
 
-// Validaciones de dirección
+/**
+ * @param {string} field
+ * @returns {any}
+ */
 export const nameValidation = (field = "name") =>
   body(field)
     .notEmpty()
@@ -192,6 +276,9 @@ export const nameValidation = (field = "name") =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const addressLineValidation = () =>
   body("address")
     .notEmpty()
@@ -201,6 +288,9 @@ export const addressLineValidation = () =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const cityValidation = () =>
   body("city")
     .notEmpty()
@@ -212,6 +302,9 @@ export const cityValidation = () =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const stateValidation = () =>
   body("state")
     .notEmpty()
@@ -223,6 +316,9 @@ export const stateValidation = () =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const postalCodeValidation = () =>
   body("postalCode")
     .notEmpty()
@@ -233,6 +329,9 @@ export const postalCodeValidation = () =>
     .withMessage("Postal code must contain only numbers")
     .trim();
 
+/**
+ * @returns {any}
+ */
 export const countryValidation = () =>
   body("country")
     .optional()
@@ -243,13 +342,18 @@ export const countryValidation = () =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const addressTypeValidation = () =>
   body("addressType")
     .optional()
     .isIn(["home", "work", "other"])
     .withMessage("Address type must be home, work, or other");
 
-// Validación de phone para direcciones (más flexible que la de usuario)
+/**
+ * @returns {any}
+ */
 export const addressPhoneValidation = () =>
   body("phone")
     .notEmpty()
@@ -260,7 +364,9 @@ export const addressPhoneValidation = () =>
     .withMessage("Phone must contain only numbers, spaces, parentheses, plus and dash")
     .trim();
 
-// Validación de email en query (para check-email, búsquedas, etc.)
+/**
+ * @returns {any}
+ */
 export const queryEmailValidation = () =>
   query("email")
     .notEmpty()
@@ -269,11 +375,18 @@ export const queryEmailValidation = () =>
     .withMessage("Valid email is required")
     .normalizeEmail();
 
-// Validación de password para login (solo verifica que no esté vacío)
+/**
+ * @returns {any}
+ */
 export const passwordLoginValidation = () =>
   body("password").notEmpty().withMessage("Password is required");
 
-// Validación de query de búsqueda
+/**
+ * @param {string} field
+ * @param {number} minLength
+ * @param {number} maxLength
+ * @returns {any}
+ */
 export const searchQueryValidation = (field = "q", minLength = 1, maxLength = 100) =>
   query(field)
     .optional()
@@ -281,18 +394,28 @@ export const searchQueryValidation = (field = "q", minLength = 1, maxLength = 10
     .isLength({ min: minLength, max: maxLength })
     .withMessage(`Search query must be between ${minLength} and ${maxLength} characters`);
 
-// Validación de sort field
+/**
+ * @param {string[]} allowedFields
+ * @returns {any}
+ */
 export const sortFieldValidation = (allowedFields = []) =>
   query("sort")
     .optional()
     .isIn(allowedFields)
     .withMessage(`Sort must be one of: ${allowedFields.join(", ")}`);
 
-// Validación de order (asc/desc)
+/**
+ * @returns {any}
+ */
 export const orderValidation = () =>
   query("order").optional().isIn(["asc", "desc"]).withMessage("Order must be asc or desc");
 
-// Validación de nombre general
+/**
+ * @param {string} field
+ * @param {boolean} required
+ * @param {number} maxLength
+ * @returns {any}
+ */
 export const generalNameValidation = (field = "name", required = true, maxLength = 100) => {
   const validator = body(field)
     .trim()
@@ -302,11 +425,17 @@ export const generalNameValidation = (field = "name", required = true, maxLength
   return required ? validator.notEmpty().withMessage(`${field} is required`) : validator.optional();
 };
 
-// Validación de MongoID en query
+/**
+ * @param {string} field
+ * @param {string} label
+ * @returns {any}
+ */
 export const queryMongoIdValidation = (field, label) =>
   query(field).optional().isMongoId().withMessage(`Invalid ${label} format`);
 
-// Validación de card holder name
+/**
+ * @returns {any}
+ */
 export const cardHolderNameValidation = () =>
   body("cardHolderName")
     .optional()
@@ -315,15 +444,21 @@ export const cardHolderNameValidation = () =>
     .withMessage("Card holder name cannot be empty")
     .escape();
 
-// Validación de PayPal email
+/**
+ * @returns {any}
+ */
 export const paypalEmailValidation = () =>
   body("paypalEmail").optional().isEmail().withMessage("Invalid PayPal email format");
 
-// Validación de bank name
+/**
+ * @returns {any}
+ */
 export const bankNameValidation = () =>
   body("bankName").optional().trim().notEmpty().withMessage("Bank name cannot be empty").escape();
 
-// Validación de account number
+/**
+ * @returns {any}
+ */
 export const accountNumberValidation = () =>
   body("accountNumber")
     .optional()
@@ -332,19 +467,30 @@ export const accountNumberValidation = () =>
     .withMessage("Account number cannot be empty")
     .escape();
 
-// Validación de precio en query (minPrice, maxPrice)
+/**
+ * @param {string} field
+ * @returns {any}
+ */
 export const queryPriceValidation = (field) =>
   query(field).optional().isFloat({ min: 0 }).withMessage(`${field} must be a positive number`);
 
-// Validación de boolean en query (inStock, etc.)
+/**
+ * @param {string} field
+ * @returns {any}
+ */
 export const queryBooleanValidation = (field) =>
   query(field).optional().isIn(["true", "false"]).withMessage(`${field} must be true or false`);
 
-// Validación de stock opcional
+/**
+ * @returns {any}
+ */
 export const stockOptionalValidation = () =>
   body("stock").optional().isInt({ min: 0 }).withMessage("Stock must be a non-negative integer");
 
-// Validación de array de URLs de imágenes
+/**
+ * @param {boolean} required
+ * @returns {any[]}
+ */
 export const imagesUrlValidation = (required = true) => {
   const validators = [
     body("imagesUrl").isArray({ min: 1 }).withMessage("At least one image URL is required"),
@@ -371,7 +517,10 @@ export const imagesUrlValidation = (required = true) => {
   return validators;
 };
 
-// Validación de nombre de producto
+/**
+ * @param {boolean} required
+ * @returns {any}
+ */
 export const productNameValidation = (required = true) => {
   const validator = body("name")
     .isLength({ min: 2, max: 100 })
@@ -381,7 +530,10 @@ export const productNameValidation = (required = true) => {
   return required ? validator.notEmpty().withMessage("Name is required") : validator.optional();
 };
 
-// Validación de descripción de producto
+/**
+ * @param {boolean} required
+ * @returns {any}
+ */
 export const productDescriptionValidation = (required = true) => {
   const validator = body("description")
     .isLength({ min: 10, max: 1000 })
@@ -393,7 +545,9 @@ export const productDescriptionValidation = (required = true) => {
     : validator.optional();
 };
 
-// Validaciones opcionales de dirección
+/**
+ * @returns {any}
+ */
 export const nameOptionalValidation = () =>
   body("name")
     .optional()
@@ -402,6 +556,9 @@ export const nameOptionalValidation = () =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const addressLineOptionalValidation = () =>
   body("address")
     .optional()
@@ -410,6 +567,9 @@ export const addressLineOptionalValidation = () =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const cityOptionalValidation = () =>
   body("city")
     .optional()
@@ -420,6 +580,9 @@ export const cityOptionalValidation = () =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const stateOptionalValidation = () =>
   body("state")
     .optional()
@@ -430,6 +593,9 @@ export const stateOptionalValidation = () =>
     .trim()
     .escape();
 
+/**
+ * @returns {any}
+ */
 export const postalCodeOptionalValidation = () =>
   body("postalCode")
     .optional()
@@ -439,6 +605,9 @@ export const postalCodeOptionalValidation = () =>
     .withMessage("Postal code must contain only numbers")
     .trim();
 
+/**
+ * @returns {any}
+ */
 export const addressPhoneOptionalValidation = () =>
   body("phone")
     .optional()
@@ -448,7 +617,10 @@ export const addressPhoneOptionalValidation = () =>
     .withMessage("Phone must contain only numbers, spaces, parentheses, plus and dash")
     .trim();
 
-// Validación de displayName con caracteres especiales permitidos
+/**
+ * @param {boolean} required
+ * @returns {any}
+ */
 export const userDisplayNameValidation = (required = true) => {
   const validator = body("displayName")
     .isLength({ min: 2, max: 50 })
@@ -463,7 +635,10 @@ export const userDisplayNameValidation = (required = true) => {
     : validator.optional();
 };
 
-// Validación de contraseña completa con número y letra requeridos
+/**
+ * @param {boolean} required
+ * @returns {any}
+ */
 export const fullPasswordValidation = (required = true) => {
   const validator = body("password")
     .isLength({ min: 6 })
@@ -476,7 +651,9 @@ export const fullPasswordValidation = (required = true) => {
   return required ? validator.notEmpty().withMessage("Password is required") : validator.optional();
 };
 
-// Validación de nueva contraseña
+/**
+ * @returns {any}
+ */
 export const newPasswordValidation = () =>
   body("newPassword")
     .isLength({ min: 6 })
@@ -486,7 +663,9 @@ export const newPasswordValidation = () =>
     .matches(/[a-zA-Z]/)
     .withMessage("New password must contain at least one letter");
 
-// Validación de confirmación de contraseña
+/**
+ * @returns {any}
+ */
 export const confirmPasswordValidation = () =>
   body("confirmPassword").custom((value, { req }) => {
     if (value !== req.body.newPassword) {
@@ -495,14 +674,18 @@ export const confirmPasswordValidation = () =>
     return true;
   });
 
-// Validación de role en query
+/**
+ * @returns {any}
+ */
 export const queryRoleValidation = () =>
   query("role")
     .optional()
     .isIn(["admin", "customer", "guest"])
     .withMessage("Role must be admin, customer, or guest");
 
-// Validación de isActive en query
+/**
+ * @returns {any}
+ */
 export const queryIsActiveValidation = () =>
   query("isActive")
     .optional()

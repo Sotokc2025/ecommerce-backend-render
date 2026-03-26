@@ -1,18 +1,18 @@
+// @ts-check
 import express from "express";
 import { createPaymentIntent } from "../controllers/paymentController.js";
+import { handlePolarWebhook } from "../controllers/paymentWebhookController.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import validate from "../middlewares/validation.js";
 import { bodyMongoIdValidation } from "../middlewares/validators.js";
 
 const router = express.Router();
-
 /**
  * @swagger
  * tags:
  *   name: Payments
  *   description: Endpoints for processing real financial payments
- */
-
+*/
 /**
  * @swagger
  * /create-payment-intent:
@@ -37,7 +37,7 @@ const router = express.Router();
  *         description: Client Secret returnado con éxito
  *       400:
  *         description: Error en la solicitud u orden ya pagada
- */
+*/
 router.post(
   "/create-payment-intent",
   authMiddleware,
@@ -45,5 +45,19 @@ router.post(
   validate,
   createPaymentIntent
 );
+/**
+ * @swagger
+ * /webhook:
+ *   post:
+ *     summary: Receptor de Webhooks de Polar.sh
+ *     tags: [Payments]
+ *     description: Endpoint público para notificaciones asíncronas de la Entidad Registrada.
+ *     responses:
+ *       200:
+ *         description: Notificación procesada con éxito
+ *       401:
+ *         description: Firma de webhook inválida
+*/
+router.post("/webhook", handlePolarWebhook);
 
 export default router;

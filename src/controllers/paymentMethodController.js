@@ -1,3 +1,4 @@
+// @ts-check
 import PaymentMethod from "../models/paymentMethod.js";
 
 const assertCanManagePaymentMethod = (paymentMethod, user) => {

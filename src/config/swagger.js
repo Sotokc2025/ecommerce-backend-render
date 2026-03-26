@@ -1,3 +1,4 @@
+// @ts-check
 import swaggerJsdoc from 'swagger-jsdoc';
 
 const options = {

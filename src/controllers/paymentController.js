@@ -1,46 +1,47 @@
-import Stripe from "stripe";
-import Order from "../models/Order.js";
-
-// Initialize Stripe with the secret key from environment variables
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder");
-
+// @ts-check
+import polarService from "../services/polarService.js";
+import Order from "../models/order.js";
 /**
- * Creates a Stripe PaymentIntent to initiate a checkout flow
- */
+ * Crea un Checkout de Polar (Entidad Registrada - MoR / Merchant of Record) para iniciar el flujo de pago.
+ * Reemplaza a Stripe para simplificar el cumplimiento global y delegar la carga fiscal.
+ * 
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+*/
+
 export const createPaymentIntent = async (req, res) => {
   try {
     const { orderId } = req.body;
+    const user = /** @type {any} */ (req).user; // Inyectado por middleware de autenticación
 
     if (!orderId) {
-      return res.status(400).json({ message: "Order ID is required to create a payment intent." });
+      res.status(400).json({ message: "Se requiere el ID de orden para el cobro." });
+      return;
     }
 
     const order = await Order.findById(orderId);
     if (!order) {
-      return res.status(404).json({ message: "Order not found." });
+      res.status(404).json({ message: "Orden no encontrada." });
+      return;
     }
 
-    if (order.isPaid) {
-      return res.status(400).json({ message: "Order is already paid." });
+    if (order.paymentStatus === 'paid') {
+      res.status(400).json({ message: "La orden ya ha sido pagada." });
+      return;
     }
 
-    // Stripe expects amount in cents for MXN, USD (ej. 100.50 MXN -> 10050)
-    const amountInCents = Math.round(order.totalPrice * 100);
-
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amountInCents,
-      currency: "mxn",
-      metadata: {
-        orderId: order._id.toString(),
-        userId: order.user.toString()
-      },
-    });
+    // 🏆 ESTRATEGIA DE ENTIDAD REGISTRADA (MoR - Merchant of Record): Redirección segura
+    const checkoutUrl = await polarService.createCheckout(order, user.email);
 
     res.status(200).json({
-      clientSecret: paymentIntent.client_secret,
+      checkoutUrl,
+      message: "Redirigiendo a pasarela de pago segura (Polar.sh)"
     });
-  } catch (error) {
-    console.error("Error creating payment intent:", error);
-    res.status(500).json({ message: "Failed to create payment intent.", error: error.message });
+
+  }
+  catch (error) {
+    const err = /** @type {any} */ (error);
+    console.error("Error en pasarela Polar:", err);
+    res.status(500).json({ message: "Falla al iniciar pasarela Polar.", error: err.message });
   }
 };
