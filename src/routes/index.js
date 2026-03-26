@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 });
 
 router.use("/auth", authRoutes);
-router.use(cartRoutes);
+router.use("/cart", cartRoutes);
 router.use(categoryRoutes);
 router.use(notificationRoutes);
 router.use(orderRoutes);
@@ -32,7 +32,7 @@ router.use(reviewRoutes);
 router.use(shippingAddressRoutes);
 router.use(userRoutes);
 router.use(wishListRoutes);
-router.use(paymentRoutes);
+router.use("/payments", paymentRoutes);
 router.use("/tymco", tymcoRoutes);
 
 export default router;

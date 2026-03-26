@@ -32,6 +32,27 @@ class MMService {
       throw new Error('MM_SYNC_FAILED');
     }
   }
+
+  /**
+   * Registra o actualiza un cliente en el CRM (PostgreSQL)
+   * @param {any} userData - Datos del usuario (email, displayName, phone)
+   */
+  async syncCustomer(userData) {
+    try {
+      const response = await axios.post(`${this.apiBase}/customers/sync`, {
+        email: userData.email,
+        name: userData.displayName,
+        phone: userData.phone || '',
+        source: 'ECOMMERCE_ATLAS'
+      });
+      console.log('👤 Cliente sincronizado en MM CRM:', response.data.email);
+      return response.data;
+    } catch (error) {
+      const e = /** @type {any} */ (error);
+      console.error('⚠️ Error sincronizando cliente a MM:', e.response?.data || e.message);
+      // No lanzamos error para no bloquear la venta si falla el CRM
+    }
+  }
 }
 
 export default new MMService();

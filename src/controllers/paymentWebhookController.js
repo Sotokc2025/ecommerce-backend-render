@@ -65,6 +65,12 @@ export const handlePolarWebhook = async (req, res) => {
       try {
         await mmService.registerSale(order.products);
         console.log(`🔥 Sincronización de venta a MM completada para orden ${orderId}`);
+        
+        // 👤 3. Sincronización de Cliente a CRM (PostgreSQL)
+        const user = await order.populate('user');
+        if (user && user.user) {
+          await mmService.syncCustomer(user.user);
+        }
       } catch (e) {
         console.error(`⚠️ Venta en MM fallida para orden ${orderId}. Se requiere intervención manual en ERP.`);
       }

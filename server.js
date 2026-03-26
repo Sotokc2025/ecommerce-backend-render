@@ -84,7 +84,7 @@ app.get("/", (req, res) => {
 });
 
 // Health Status Dashboard
-app.get("/status", (req, res) => {
+app.get("/api/status", (req, res) => {
   const db_status = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
   const db_name = mongoose.connection.name || 'maderas-db';
   const db_user = process.env.MONGODB_USER || 'karlitasoto2026_db_user';

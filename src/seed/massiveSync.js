@@ -155,8 +155,13 @@ async function massiveSync() {
       if (!p.name || !p.category) return;
       const catId = categoryIdMap.get(p.category.trim().toUpperCase());
       if (catId) {
+        // 🛡️ Sello Soberano: Concatenar subcategoría si existe para evitar duplicados (314 unique names -> 687 products)
+        const fullName = p.subcategory 
+          ? `${p.name.trim()} (${p.subcategory.trim()})`
+          : p.name.trim();
+
         allProductsToSync.push({
-          name: p.name.trim(),
+          name: fullName,
           description: p.subcategory ? `Sayer-Lack - ${p.subcategory}` : "Calidad Sayer-Lack para tus proyectos.",
           price: parseSayerPrice(p.price),
           stock: 20, // Stock de seguridad piloto

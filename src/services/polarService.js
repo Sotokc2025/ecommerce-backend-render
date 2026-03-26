@@ -30,7 +30,8 @@ class PolarService {
       if (!this.apiKey || this.apiKey.includes('placeholder')) {
         console.warn('⚠️ [POLAR MOCK ACTIVE] Usando simulador de checkout para desarrollo.');
         // @ts-ignore
-        return `${process.env.FRONTEND_URL}/order-confirmation?orderId=${order._id}&mock=true`;
+        const baseUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        return `${baseUrl}/order-confirmation?orderId=${order._id}&mock=true`;
       }
       // Polar usa un mapeo 1:1. Para propósitos de este Ecommerce,
       // creamos un pago único o vinculamos a productos pre-existentes en Polar.
@@ -41,7 +42,7 @@ class PolarService {
         product_id: process.env.POLAR_DEFAULT_PRODUCT_ID, // Producto 'Carrito de Compras' en Polar
         customer_email: customerEmail,
         // @ts-ignore
-        success_url: `${process.env.FRONTEND_URL}/order-confirmation?orderId=${order._id}`,
+        success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/order-confirmation?orderId=${order._id}`,
         metadata: {
           orderId: order._id.toString(),
           external_id: order.user.toString() // Link directo al usuario de nuestro sistema
